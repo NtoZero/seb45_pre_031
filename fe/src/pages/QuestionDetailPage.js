@@ -3,7 +3,14 @@ import NavBar from "../components/sharedlayout/NavBar"
 import Aside from "../components/sharedlayout/Aside"
 
 import AskQuestionBtn from "../components/atoms/AskQuestionBtn"
+
+import Answer from "../components/features/Answer";
+
 import Footer from "../components/sharedlayout/Footer";
+
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const DivAllContainer = styled.div`
   display: flex;
@@ -45,7 +52,7 @@ const SpanSubTitleRight = styled.span`
 const DivMainAside = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1051px;
+  width: 1080px;
 `
 const MainMain = styled.main`
   width: 100%;
@@ -143,9 +150,27 @@ const LabelAnswerFilter = styled.label`
   margin-right: 8px;
   font-size: 12px;
   color: rgb(35, 38, 41);
-
+`
+const SelectAnswerFilter = styled.select`
+  width: 250px;
+  border: solid 1px rgb(186, 191, 196);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 13px;
 `
 const ArticleA = styled.article`
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin-bottom: 24px;
+`
+const ArticleNewA = styled.article`
+`
+const H2YourAnswer = styled.h2`
+  padding: 20px 0;
+  border-top: 1px solid rgb(227, 230, 232);
+`
+const DivQuill = styled.div`
+  height: 200px;
 `
 ///// 임시 DB 시작 /////
 const askAll = {
@@ -186,6 +211,9 @@ const askAll = {
 ///// 임시 DB 끝 /////
 
 function QuestionDetailPage() {
+
+  const [newAnswerValue, setNewAnswerValue] = useState('');
+
   return(
     <div>
       <DivAllContainer>
@@ -283,19 +311,73 @@ function QuestionDetailPage() {
                 <SpanAnswerLength>
                   {askAll.answer.length+" Answers"}
                 </SpanAnswerLength>
-                <span>
+                <form>
                   <LabelAnswerFilter>
-                    sorted by:
+                    Sorted by:
                   </LabelAnswerFilter>
-                  <select>
-
-                  </select>
-                </span>
+                  <SelectAnswerFilter>
+                    <option>Highest score (default)</option>
+                    <option>Trending (recent votes count more)</option>
+                    <option>Date modified (newest first)</option>
+                    <option>Date created (oldest first)</option>
+                  </SelectAnswerFilter>
+                </form>
               </DivAnswerContainer>
               <ArticleA>
-
+              <SpanVoteContainer>
+                  <ButtonUpDown>
+                    ▲
+                  </ButtonUpDown>
+                  <DivVote>
+                    {askAll.vote_up.length - askAll.vote_down.length}
+                  </DivVote>
+                  <ButtonUpDown>
+                    ▼
+                  </ButtonUpDown>
+                </SpanVoteContainer>
+                <SpanQContainer>
+                  <DivQText>
+                    {askAll.bodyHTML}
+                  </DivQText>
+                  <DivShareEditProfile>
+                    <SpanShare>
+                      <span>
+                        Share
+                      </span>
+                      <span>
+                        Improve this question
+                      </span>
+                      <span>
+                        Follow
+                      </span>
+                    </SpanShare>
+                    <SpanProfile>
+                      <div>{"asked "+new Intl.DateTimeFormat("en-GB",{month: 'short', day: 'numeric'}).format(new Date(askAll.created_at))}</div>
+                      <SpanProfileUser>
+                        <img
+                          src={askAll.avatarUrl}
+                          alt=""
+                          width="32px" height="32px"
+                        />
+                        <span>
+                          <DivUserName>name</DivUserName>
+                          <DivFollow>follow</DivFollow>
+                        </span>
+                      </SpanProfileUser>
+                    </SpanProfile>
+                  </DivShareEditProfile>
+                </SpanQContainer>
+                <span></span>
+                <SpanComment>Add a comment</SpanComment>                
               </ArticleA>
-              
+              <ArticleNewA>
+                <H2YourAnswer>
+                  Your Answer
+                </H2YourAnswer>
+                <DivQuill>
+                  <ReactQuill theme="snow" value={newAnswerValue} onChange={setNewAnswerValue} />
+                </DivQuill>
+              </ArticleNewA>
             </MainMain>
             <Aside />
           </DivMainAside>
