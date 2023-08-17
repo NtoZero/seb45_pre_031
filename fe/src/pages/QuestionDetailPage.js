@@ -77,6 +77,7 @@ const SpanComment = styled.span`
   color: rgb(131, 140, 149);
 `
 const SpanQContainer = styled.span`
+  margin-bottom: 16px;
 `
 const DivQText = styled.div`
 `
@@ -129,6 +130,20 @@ const DivUserName = styled.div`
 `
 const DivFollow = styled.div`
   color: rgb(106, 115, 124);
+`
+const DivAnswerContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0;
+`
+const SpanAnswerLength = styled.span`
+  font-size: 19px;
+`
+const LabelAnswerFilter = styled.label`
+  margin-right: 8px;
+  font-size: 12px;
+  color: rgb(35, 38, 41);
+
 `
 const ArticleA = styled.article`
 `
@@ -264,6 +279,19 @@ function QuestionDetailPage() {
                 <span></span>
                 <SpanComment>Add a comment</SpanComment>
               </ArticleQ>
+              <DivAnswerContainer>
+                <SpanAnswerLength>
+                  {askAll.answer.length+" Answers"}
+                </SpanAnswerLength>
+                <span>
+                  <LabelAnswerFilter>
+                    sorted by:
+                  </LabelAnswerFilter>
+                  <select>
+
+                  </select>
+                </span>
+              </DivAnswerContainer>
               <ArticleA>
 
               </ArticleA>
