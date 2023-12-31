@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper objectMapper = new ObjectMapper(); //역직렬화 위한 ObjectMapper 인스턴스
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
-        log.info("# attemptAuthentication : loginDto.getUsername()={}, login.getPassword()={}",loginDto.getEmail(),loginDto.getPassword());
+//        log.info("# attemptAuthentication : loginDto.getUsername()={}, login.getPassword()={}",loginDto.getEmail(),loginDto.getPassword());
 
         // Username과 Password 정보를 포함한 미인증 토큰 발행
         UsernamePasswordAuthenticationToken authenticationToken =
